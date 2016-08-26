@@ -25,9 +25,12 @@ zookeeper_connect=localhost:2181
 
 echo "export KAFKA_HOME=/usr/local/kafka" >> .bashrc.x.sh
 echo 'export PATH=$KAFKA_HOME/bin:$PATH' >> .bashrc.x.sh
-echo "alias zk-start=\$KAFKA_HOME/bin/zookeeper-server-start.sh \$KAFKA_HOME/config/zookeeper.properties"
+echo 'export zookeeper_connect=localhost:2181' >> .bashrc.x.sh
+echo "alias zk-start='\$KAFKA_HOME/bin/zookeeper-server-start.sh \$KAFKA_HOME/config/zookeeper.properties'" >> .bashrc.x.sh
 echo "alias kf-start='\$KAFKA_HOME/bin/kafka-server-start.sh \$KAFKA_HOME/config/server.properties &'" >> .bashrc.x.sh
 echo "alias kf-stop='\$KAFKA_HOME/bin/kafka-server-stop.sh \$KAFKA_HOME/config/server.properties &'" >> .bashrc.x.sh
 echo "alias kf-list='\$KAFKA_HOME/bin/kafka-topics.sh --list --zookeeper ${zookeeper_connect}'" >> .bashrc.x.sh
 echo "alias kf-create-topic='\$KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper \${zookeeper_connect} --replication-factor 1 --partition 1 --topic '" >> .bashrc.x.sh
 echo ". .bashrc.x.sh" >> .bashrc
+mkdir $KAFKA_HOME/logs
+chmod a+rwx $KAFKA_HOME/logs
