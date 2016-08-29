@@ -15,7 +15,7 @@ fi
 rm -rf /usr/local/kafka
 ln -s `pwd`/${KAFKA_BASE} /usr/local/kafka
 mkdir -p ${KAFKA_BASE}/logs
-chmod a+x ${KAFKA_BASE}/logs
+chmod a+arw ${KAFKA_BASE}/logs
 zookeeper_connect=localhost:2181
 #mv /usr/local/kafka/config/server.properties /usr/local/kafka/config/server.properties.orig
 #sed \
