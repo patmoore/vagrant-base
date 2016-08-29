@@ -8,12 +8,14 @@ vagrant_downloads=/vagrant/downloads
 KAFKA_BASE=kafka_2.11-${KAFKA_VER}
 if [ ! -d "${KAFKA_BASE}" ] ; then
   if [ ! -f "${vagrant_downloads}/${KAFKA_BASE}.tgz" ] ; then 
-    (cd ${vagrant_downloads} ; curl -O https://archive.apache.org/dist/kafka/${KAFKA_VER}/${KAFKA_BASE}.tgz )
+    (mkdir -p ${vagrant_downloads}; cd ${vagrant_downloads} ; curl -O https://archive.apache.org/dist/kafka/${KAFKA_VER}/${KAFKA_BASE}.tgz )
   fi
   tar -zxf ${vagrant_downloads}/${KAFKA_BASE}.tgz 
 fi
-sudo rm -rf /usr/local/kafka
-sudo ln -s `pwd`/${KAFKA_BASE} /usr/local/kafka
+rm -rf /usr/local/kafka
+ln -s `pwd`/${KAFKA_BASE} /usr/local/kafka
+mkdir -p ${KAFKA_BASE}/logs
+chmod a+x ${KAFKA_BASE}/logs
 zookeeper_connect=localhost:2181
 #mv /usr/local/kafka/config/server.properties /usr/local/kafka/config/server.properties.orig
 #sed \
@@ -23,7 +25,7 @@ zookeeper_connect=localhost:2181
 # /usr/local/kafka/config/server.properties.orig > /usr/local/kafka/config/server.properties
 #
 
-echo "export KAFKA_HOME=/usr/local/kafka" >> .bashrc.x.sh
+echo "export KAFKA_HOME=/usr/local/kafka" > .bashrc.x.sh
 echo 'export PATH=$KAFKA_HOME/bin:$PATH' >> .bashrc.x.sh
 echo 'export zookeeper_connect=localhost:2181' >> .bashrc.x.sh
 echo "alias zk-start='\$KAFKA_HOME/bin/zookeeper-server-start.sh \$KAFKA_HOME/config/zookeeper.properties'" >> .bashrc.x.sh
