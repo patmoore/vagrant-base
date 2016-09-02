@@ -17,14 +17,16 @@ ln -s `pwd`/${KAFKA_BASE} /usr/local/kafka
 mkdir -p ${KAFKA_BASE}/logs
 chmod a+rwx ${KAFKA_BASE}/logs
 zookeeper_connect=localhost:2181
+export KAFKA_HOME=/usr/local/kafka
 
 kafka_server_properties=/usr/local/kafka/config/local.server.properties
 cp /usr/local/kafka/config/server.properties ${kafka_server_properties}
-echo<<EOM >> /usr/local/kafka/config/local.server.properties
+cat<<EOM >> /usr/local/kafka/config/local.server.properties
 host.name=${ip_address}
 advertised.host.name=${ip_address}
 listeners=PLAINTEXT://${ip_address}:9092
 EOM
+
 # TODO need to change the host.name, advertised.host.name and listeners
 # http://davidssysadminnotes.blogspot.com/2016/05/network-access-kafka.html
 # http://stackoverflow.com/questions/38260091/kafka-0-10-java-client-timeoutexception-batch-containing-1-records-expired
